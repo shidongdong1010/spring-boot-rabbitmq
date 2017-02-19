@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import spring.boot.rabbitmq.fanout.FanoutConsumer1;
 import spring.boot.rabbitmq.fanout.FanoutConsumer2;
 import spring.boot.rabbitmq.fanout.FanoutProvider;
+import spring.boot.rabbitmq.topic.DeadConsumer;
 import spring.boot.rabbitmq.topic.TopicConsumer1;
 import spring.boot.rabbitmq.topic.TopicConsumer2;
 import spring.boot.rabbitmq.topic.TopicProvider;
@@ -126,19 +127,23 @@ public class SpringBootRabbitmqApplication {
 
 	@Bean
 	public TopicExchange topicExchange() {
-		return new TopicExchange("testTopicModeExchange", false, false);
+		return new TopicExchange("testTopicModeExchange", true, false);
 	}
 
-/*
+
 	@Bean
-	public DirectExchange deadExchange() {
-		return new DirectExchange("x-dead-letter-exchange", false, false);
+	public TopicExchange deadExchange() {
+		return new TopicExchange("exchange.dlx", true, false);
 	}
-*/
+
 
 	@Bean
 	public Queue testTopicModeQueue1() {
-		Queue queue = new Queue("testTopicModeQueue.1", true);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("x-dead-letter-exchange", "exchange.dlx");//设置死信交换机
+		map.put("x-dead-letter-routing-key", "queue.fail");//设置死信routingKey
+		Queue queue = new Queue("testTopicModeQueue.1", true, false, false, map);
+		//Queue queue = new Queue("testTopicModeQueue.1", true);
 		return queue;
 	}
 
@@ -150,10 +155,7 @@ public class SpringBootRabbitmqApplication {
 
 	@Bean
 	public Queue testQueueDead(){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("x-dead-letter-exchange", "exchange.dlx");//设置死信交换机
-		//Queue queue = new Queue("testTopicModeQueue.1", true, false, false, map);
-		Queue queue = new Queue("deadQueue", true, false, false, map);
+		Queue queue = new Queue("deadQueue", true);
 		return queue;
 	}
 
@@ -169,7 +171,7 @@ public class SpringBootRabbitmqApplication {
 
 	@Bean
 	public Binding bindingTestTopicModeQueueDead() {
-		return BindingBuilder.bind(testQueueDead()).to(topicExchange()).with("key1");
+		return BindingBuilder.bind(testQueueDead()).to(deadExchange()).with("queue.fail");
 	}
 
 
@@ -190,6 +192,10 @@ public class SpringBootRabbitmqApplication {
 	}
 */
 
+	@Bean
+	public DeadConsumer deadConsumer() {
+		return new DeadConsumer();
+	}
 
 
 /** Fanout模式 **/
