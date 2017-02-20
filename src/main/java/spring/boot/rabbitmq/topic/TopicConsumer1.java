@@ -21,7 +21,7 @@ public class TopicConsumer1 {
     @RabbitHandler
     public void process3(@Payload java.util.Date msg) throws Exception {
         logger.warn("消费1：" + ": " + msg+ ", 重试次数：" + (i++));
-        //throw new Exception("报错了");
+        throw new Exception("报错了");
         //throw new AmqpRejectAndDontRequeueException("test-dead-letter");
     }
 

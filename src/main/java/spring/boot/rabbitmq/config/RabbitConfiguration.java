@@ -81,9 +81,9 @@ public class RabbitConfiguration implements RabbitTemplate.ReturnCallback, Rabbi
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         if (!ack) {
-            if(correlationData != null) {
-                rabbitRetryCache.retryNum(correlationData.getId());
-            }
+            /*if(correlationData != null) {
+                rabbitRetryCache.retry(correlationData.getId());
+            }*/
             logger.warn("rabbitmq发送消息出错, confirm结果: " + cause + correlationData);
         } else {
             if(correlationData != null) {

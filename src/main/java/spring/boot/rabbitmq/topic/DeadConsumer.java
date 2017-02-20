@@ -19,6 +19,7 @@ public class DeadConsumer {
         logger.warn("dead消费1：" + ": " + msg+ ", 重试次数：" + (i++));
         //throw new Exception("报错了");
         //throw new AmqpRejectAndDontRequeueException("test-dead-letter");
+        // TODO 保存到数据库中
     }
 
 }
