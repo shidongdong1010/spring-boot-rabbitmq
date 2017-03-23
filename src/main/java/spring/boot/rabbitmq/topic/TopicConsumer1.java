@@ -13,7 +13,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 /**
  * Created by SDD on 2017/1/23.
  */
-@RabbitListener(queues = "testTopicModeQueue.1", containerFactory = "rabbitListenerContainerFactory")
+@RabbitListener(queues = "testTopicModeQueue.1.sdd", containerFactory = "rabbitListenerContainerFactory")
 public class TopicConsumer1 {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -24,5 +24,6 @@ public class TopicConsumer1 {
         throw new Exception("报错了");
         //throw new AmqpRejectAndDontRequeueException("test-dead-letter");
     }
+
 
 }

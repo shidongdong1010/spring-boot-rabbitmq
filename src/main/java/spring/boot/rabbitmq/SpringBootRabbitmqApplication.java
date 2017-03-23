@@ -125,37 +125,41 @@ public class SpringBootRabbitmqApplication {
 
 /** topic 模式**/
 
+/*
 	@Bean
 	public TopicExchange topicExchange() {
-		return new TopicExchange("testTopicModeExchange", true, false);
+		return new TopicExchange("testTopicModeExchange.sdd", true, false);
 	}
 
 
 	@Bean
 	public TopicExchange deadExchange() {
-		return new TopicExchange("exchange.dlx", true, false);
+		return new TopicExchange("exchange.dlx.sdd", true, false);
 	}
 
 
 	@Bean
 	public Queue testTopicModeQueue1() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("x-dead-letter-exchange", "exchange.dlx");//设置死信交换机
-		map.put("x-dead-letter-routing-key", "queue.fail");//设置死信routingKey
-		Queue queue = new Queue("testTopicModeQueue.1", true, false, false, map);
+		map.put("x-dead-letter-exchange", "exchange.dlx.sdd");//设置死信交换机
+		map.put("x-dead-letter-routing-key", "queue.fail.sdd");//设置死信routingKey
+		Queue queue = new Queue("testTopicModeQueue.1.sdd", true, false, false, map);
 		//Queue queue = new Queue("testTopicModeQueue.1", true);
 		return queue;
 	}
 
-/*	@Bean
+	@Bean
 	public Queue testTopicModeQueue2() {
-		Queue queue = new Queue("testTopicModeQueue.2", true);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("x-dead-letter-exchange", "exchange.dlx.sdd");//设置死信交换机
+		map.put("x-dead-letter-routing-key", "queue.fail.sdd");//设置死信routingKey
+		Queue queue = new Queue("testTopicModeQueue.2.sdd", true, false, false, map);
 		return queue;
-	}*/
+	}
 
 	@Bean
 	public Queue testQueueDead(){
-		Queue queue = new Queue("deadQueue", true);
+		Queue queue = new Queue("deadQueue.sdd", true);
 		return queue;
 	}
 
@@ -164,14 +168,14 @@ public class SpringBootRabbitmqApplication {
 		return BindingBuilder.bind(testTopicModeQueue1()).to(topicExchange()).with("key1");
 	}
 
-/*	@Bean
+	@Bean
 	public Binding bindingTestTopicModeQueue2() {
 		return BindingBuilder.bind(testTopicModeQueue2()).to(topicExchange()).with("key1");
-	}*/
+	}
 
 	@Bean
 	public Binding bindingTestTopicModeQueueDead() {
-		return BindingBuilder.bind(testQueueDead()).to(deadExchange()).with("queue.fail");
+		return BindingBuilder.bind(testQueueDead()).to(deadExchange()).with("queue.fail.sdd");
 	}
 
 
@@ -185,18 +189,21 @@ public class SpringBootRabbitmqApplication {
 		return new TopicConsumer1();
 	}
 
+*/
 /*
 	@Bean
 	public TopicConsumer2 topicConsumer2() {
 		return new TopicConsumer2();
 	}
-*/
+*//*
+
 
 	@Bean
 	public DeadConsumer deadConsumer() {
 		return new DeadConsumer();
 	}
 
+*/
 
 /** Fanout模式 **/
 

@@ -19,12 +19,12 @@ public class TopicProvider {
     private RabbitTemplateHelper rabbitTemplateHelper;
 
 
-    @Scheduled(initialDelay=1000, fixedDelay=50000000)
+    //@Scheduled(initialDelay=1000, fixedDelay=50000000)
     //@Scheduled(fixedDelay = 5000L)
     public void test2(){
         //rabbitTemplate.convertAndSend("key1", "testTopicModeExchange消息");
         java.util.Date d = new java.util.Date();
-        rabbitTemplateHelper.send("testTopicModeExchange1", "key2", d);
+        rabbitTemplateHelper.send("testTopicModeExchange.sdd", "key1", d);
         System.out.println("发送消息：" + d);
     }
 }

@@ -74,7 +74,8 @@ public class RabbitTemplateHelper {
                     Collection<RabbitRetryCache.RabbitMessage> list = rabbitRetryCache.getRabbitMessage();
                     if (!list.isEmpty()) {
                         for (RabbitRetryCache.RabbitMessage message : list) {
-                            if (message.getRetryNum() < 5) {
+                            // 重发次数小于5，且最后发送时间大于3秒
+                            if (message.getRetryNum() < 5 && (message.getLastTime() + 3000) < System.currentTimeMillis()) {
                                 // 重试
                                 rabbitRetryCache.retry(message.getId());
                                 if (message.getExchange() != null && message.getRoutingKey() != null) {

@@ -172,5 +172,19 @@ public class RabbitRetryCache {
         public void setQueue(String queue) {
             this.queue = queue;
         }
+
+        @Override
+        public String toString() {
+            return "RabbitMessage{" +
+                    "id='" + id + '\'' +
+                    ", time=" + time +
+                    ", lastTime=" + lastTime +
+                    ", exchange='" + exchange + '\'' +
+                    ", routingKey='" + routingKey + '\'' +
+                    ", queue='" + queue + '\'' +
+                    ", message=" + message +
+                    ", retryNum=" + retryNum +
+                    '}';
+        }
     }
 }
